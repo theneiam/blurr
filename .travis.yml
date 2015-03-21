@@ -6,5 +6,5 @@ node_js:
   - "1.0"
   - "1.5"
 sudo: false
-services:
-  - express
+before_install:
+  - "npm install express"
