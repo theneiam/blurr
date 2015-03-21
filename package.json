@@ -1,0 +1,23 @@
+{
+  "name": "prowl",
+  "version": "0.0.1",
+  "description": "Prowl - powerfull routing manager for Express",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/test.js"
+  },
+  "keywords": [
+    "prowl",
+    "express",
+    "router",
+    "routing",
+    "resource",
+    "rest"
+  ],
+  "author": "Eugene Nezhuta",
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "^2.2.1",
+    "supertest": "^0.15.0"
+  }
+}
