@@ -8,16 +8,16 @@ Blurr - powerful routing manager middleware for [Express](https://github.com/str
 ## Install
 
 ```sh
-$ npm install prowl
+$ npm install blurr
 ```
 
 ## API
 
 ```js
-var prowl = require('prowl')
+var blurr = require('blurr')
 ```
 
-### prowl(config)
+### blurr(config)
 
 Create a new middleware function ....
 
