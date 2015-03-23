@@ -43,17 +43,31 @@ exports = module.exports = function prowl(config) {
         // iterate through resources and register proper routes
         config.resources.forEach(function(resource, index) {
 
-            for (var urlConfig in resource.routes) {
-                var routeData  = parseResourceUrlConfig(urlConfig),
-                    router     = express.Router(),
-                    module     = resource.module || '',
-                    controllersPath = config.paths.controllers.replace('*', module),
-                    controller = require(controllersPath + routeData['controller']),
-                    middleware = loadResourceRouteMiddleware(resource.routes[urlConfig]);
+            // each resource use its own instance of the express router
+            var router = express.Router();
 
-                router[routeData['type']](routeData['url'], middleware, controller[routeData['action']]);
+            for (var urlConfig in resource.routes) {
+
+                // parse resource route url and get all route meta information
+                var routeMeta = parseResourceUrlConfig(urlConfig)
+
+                // try to get resource module name, if modular structure is used
+                var module = resource.module || '';
+
+                // path to controllers considering module
+                var controllersPath = config.paths.controllers.replace('*', module);
+
+                // require controller to handle the request
+                var controller = require(controllersPath + routeMeta['controller']);
+
+                // load route related middleware
+                var middleware = loadResourceRouteMiddleware(resource.routes[urlConfig]);
+
+                // register resource route
+                router[routeMeta['type']](routeMeta['url'], middleware, controller[routeMeta['action']]);
             }
 
+            // mount router to the application into the mount point specified by resource
             req.app.use(resource.mount, router);
 
         });
@@ -70,13 +84,13 @@ exports = module.exports = function prowl(config) {
  * @private
  */
 var parseResourceUrlConfig = function(urlConfig) {
-    var splitted = urlConfig.split(' ');
+    var splitUrlConfig = urlConfig.split(' ');
 
     return {
-        'type'       : splitted[0],
-        'url'        : splitted[1],
-        'controller' : splitted[2].split('@')[0],
-        'action'     : splitted[2].split('@')[1]
+        'type'       : splitUrlConfig[0],
+        'url'        : splitUrlConfig[1],
+        'controller' : splitUrlConfig[2].split('@')[0],
+        'action'     : splitUrlConfig[2].split('@')[1]
     }
 };
 
