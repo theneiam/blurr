@@ -1,10 +1,10 @@
 {
-  "name": "prowl",
-  "description": "Prowl - powerfull routing manager for Express",
-  "version": "0.1.1",
+  "name": "Blurr",
+  "description": "Blurr - powerfull routing manager for Express",
+  "version": "1.0.0",
   "author": "Eugene Nezhuta <eugene.nezhuta@gmail.com>",
   "license": "MIT",
-  "repository": "theneiam/prowl",
+  "repository": "theneiam/blurr",
   "devDependencies": {
     "mocha": "^2.2.1",
     "supertest": "^0.15.0"
@@ -16,9 +16,9 @@
     "test": "mocha test/test.js"
   },
   "keywords": [
-    "prowl",
-    "prowl rest",
-    "prowl router",
+    "blurr",
+    "blurr rest",
+    "blurr router",
     "express",
     "express routing",
     "express restful router",

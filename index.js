@@ -1,5 +1,5 @@
 /*!
- * Prowl - powerful routing manager middleware for Express
+ * Blurr - powerful routing manager middleware for Express
  *
  * @author Eugene Nezhuta <eugene.nezhuta@gmail.com>
  * Copyright(c) 2015 Eugene Nezhuta
@@ -16,7 +16,7 @@ var express = require('express');
  * @param {Object} config
  * @return {Function}
  */
-exports = module.exports = function prowl(config) {
+exports = module.exports = function blurr(config) {
 
     if (!config) {
         throw new TypeError('configuration required');
@@ -38,7 +38,7 @@ exports = module.exports = function prowl(config) {
         throw new TypeError('configuration resources required');
     }
 
-    return function prowl(req, res, next) {
+    return function blurr(req, res, next) {
 
         // iterate through resources and register proper routes
         config.resources.forEach(function(resource, index) {
