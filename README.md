@@ -1,23 +1,23 @@
-Prowl
+Blurr
 =====
-[![Travis](https://travis-ci.org/theneiam/prowl.svg?branch=master)](https://travis-ci.org/theneiam/prowl.svg?branch=master)
-[![Code Climate](https://codeclimate.com/github/theneiam/prowl/badges/gpa.svg)](https://codeclimate.com/github/theneiam/prowl)
+[![Travis](https://travis-ci.org/theneiam/blurr.svg?branch=master)](https://travis-ci.org/theneiam/blurr.svg?branch=master)
+[![Code Climate](https://codeclimate.com/github/theneiam/blurr/badges/gpa.svg)](https://codeclimate.com/github/theneiam/blurr)
 
-Prowl Prowl - powerful routing manager middleware for [Express](https://github.com/strongloop/express)
+Blurr - powerful routing manager middleware for [Express](https://github.com/strongloop/express)
 
 ## Install
 
 ```sh
-$ npm install prowl
+$ npm install blurr
 ```
 
 ## API
 
 ```js
-var prowl = require('prowl')
+var blurr = require('blurr')
 ```
 
-### prowl(config)
+### blurr(config)
 
 Create a new middleware function ....
 
