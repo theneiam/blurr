@@ -102,7 +102,7 @@ and **blurr** will automatically resolve it to correct path using resource *modu
             'get / messages@all': []
         }
     }
-``
+```
 
 In the example above, the final path to controller will be */path/to/modular/messaging/controllers/directory/*
 
