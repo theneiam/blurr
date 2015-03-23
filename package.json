@@ -1,23 +1,31 @@
 {
   "name": "prowl",
-  "version": "0.0.1",
   "description": "Prowl - powerfull routing manager for Express",
-  "main": "index.js",
+  "version": "0.0.1",
+  "author": "Eugene Nezhuta <eugene.nezhuta@gmail.com>",
+  "license": "MIT",
+  "repository": "theneiam/prowl",
+  "devDependencies": {
+    "mocha": "^2.2.1",
+    "supertest": "^0.15.0"
+  },
+  "engines": {
+    "node": ">= 0.10"
+  },
   "scripts": {
     "test": "mocha test/test.js"
   },
   "keywords": [
     "prowl",
+    "prowl rest",
+    "prowl router",
     "express",
+    "express routing",
+    "express restful router",
+    "express restful routing",
+    "rest",
     "router",
     "routing",
-    "resource",
-    "rest"
-  ],
-  "author": "Eugene Nezhuta",
-  "license": "MIT",
-  "devDependencies": {
-    "mocha": "^2.2.1",
-    "supertest": "^0.15.0"
-  }
+    "restful router"
+  ]
 }
