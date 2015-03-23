@@ -1,7 +1,7 @@
 {
   "name": "prowl",
   "description": "Prowl - powerfull routing manager for Express",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "author": "Eugene Nezhuta <eugene.nezhuta@gmail.com>",
   "license": "MIT",
   "repository": "theneiam/prowl",
