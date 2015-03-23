@@ -108,6 +108,6 @@ var loadResourceRouteMiddleware = function(middlewareNames) {
     }
 
     return middlewareNames.map(function(name) {
-        return require(config.paths.middlewares + name);
+        return require(config.paths.middleware + name);
     });
 }
