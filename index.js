@@ -6,6 +6,8 @@
  * MIT Licensed
  */
 
+'use strict';
+
 /**
  * Module dependencies
  */
@@ -16,7 +18,7 @@ var express = require('express');
  * @param {Object} config
  * @return {Function}
  */
-exports = module.exports = function blurr(config) {
+module.exports = function blurr(config) {
 
     if (!config) {
         throw new TypeError('configuration required');
@@ -41,30 +43,46 @@ exports = module.exports = function blurr(config) {
     return function blurr(req, res, next) {
 
         // iterate through resources and register proper routes
-        config.resources.forEach(function(resource, index) {
+        config.resources.forEach(function (resource) {
 
             // each resource use its own instance of the express router
-            var router = express.Router();
-
-            for (var urlConfig in resource.routes) {
-
-                // parse resource route url and get all route meta information
-                var routeMeta = parseResourceUrlConfig(urlConfig)
+            var router = express.Router(),
 
                 // try to get resource module name, if modular structure is used
-                var module = resource.module || '';
+                module = resource.module || '',
 
                 // path to controllers considering module
-                var controllersPath = config.paths.controllers.replace('*', module);
+                controllersPath = config.paths.controllers.replace('*', module),
 
-                // require controller to handle the request
-                var controller = require(controllersPath + routeMeta['controller']);
+                // current route url with configuration
+                urlConfig,
 
-                // load route related middleware
-                var middleware = loadResourceRouteMiddleware(config.paths.middleware, resource.routes[urlConfig]);
+                // route meta information after parsing route config url
+                routeMeta,
 
-                // register resource route
-                router[routeMeta['type']](routeMeta['url'], middleware, controller[routeMeta['action']]);
+                // controller to handle the specific route
+                controller,
+
+                // list of middleware that required for current route
+                middleware;
+
+            for (urlConfig in resource.routes) {
+
+                if (resource.routes.hasOwnProperty(urlConfig)) {
+
+                    // parse resource route url and get all route meta information
+                    routeMeta = parseResourceUrlConfig(urlConfig);
+
+                    // require controller to handle the reques
+                    controller = require(controllersPath + routeMeta.controller);
+
+                    // load route related middleware
+                    middleware = loadResourceRouteMiddleware(config.paths.middleware, resource.routes[urlConfig]);
+
+                    // register resource route
+                    router[routeMeta.type](routeMeta.url, middleware, controller[routeMeta.action]);
+
+                }
             }
 
             // mount router to the application into the mount point specified by resource
@@ -73,7 +91,7 @@ exports = module.exports = function blurr(config) {
         });
 
         return next();
-    }
+    };
 };
 
 /**
@@ -83,7 +101,7 @@ exports = module.exports = function blurr(config) {
  * @returns {{type: *, url: *, controller: *, action: *}}
  * @private
  */
-var parseResourceUrlConfig = function(urlConfig) {
+var parseResourceUrlConfig = function (urlConfig) {
     var splitUrlConfig = urlConfig.split(' ');
 
     return {
@@ -91,7 +109,7 @@ var parseResourceUrlConfig = function(urlConfig) {
         'url'        : splitUrlConfig[1],
         'controller' : splitUrlConfig[2].split('@')[0],
         'action'     : splitUrlConfig[2].split('@')[1]
-    }
+    };
 };
 
 /**
@@ -102,13 +120,13 @@ var parseResourceUrlConfig = function(urlConfig) {
  * @returns {Array} List of middleware ready to be injected into the route
  * @private
  */
-var loadResourceRouteMiddleware = function(middlewarePath, middlewareNames) {
+var loadResourceRouteMiddleware = function (middlewarePath, middlewareNames) {
 
     if (!middlewareNames) {
         return [];
     }
 
-    return middlewareNames.map(function(name) {
+    return middlewareNames.map(function (name) {
         return require(middlewarePath + name);
     });
-}
+};
