@@ -1,3 +1,8 @@
+1.1.1 / 2015-03-24
+  * Fixed middleware loading bug
+  * Added simple application example
+  * Added GET tests  
+
 1.1.0 / 2015-03-24
 ==================
   * Configuration option changed from 'middlewares' to 'moddleware'

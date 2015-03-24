@@ -1,11 +1,12 @@
 
 var assert  = require('assert'),
     request = require('supertest'),
-    blurr   = require('..');
+    blurr   = require('..'),
+    app     = require('../examples/simple/app');
 
 describe('blurr() test suits', function() {
 
-    describe('Basic operations', function() {
+    describe('Create Blurr instance', function() {
 
         it('should require config', function() {
             assert.throws(blurr.bind(), /configuration required/);
@@ -27,6 +28,37 @@ describe('blurr() test suits', function() {
             assert.throws(blurr.bind(blurr, { paths: {} }), /configuration paths controllers required/);
         });
 
+    });
+
+    describe('Using Blurr in application', function() {
+
+        it('should GET / => index@home with response status 200', function(done) {
+            request(app)
+                .get('/')
+                .expect(200, done);
+        });
+
+        it('should GET /middleware => index@middleware', function(done) {
+            request(app)
+                .get('/middleware')
+                .expect('Index controller, middleware action')
+                .expect(200, done);
+        });
+
+        it('should GET /middleware/:message and load simple middleware', function(done) {
+            request(app)
+                .get('/middleware/hello')
+                .expect('Blurr is saying hello to you!')
+                .expect(200, done);
+        });
+
+        it('should GET /json and respond with json', function(done) {
+            request(app)
+                .get('/json')
+                .expect('Content-Type', /json/)
+                .expect({message: 'Blurr is saying hi!'})
+                .expect(200, done);
+        });
     });
 
 });
