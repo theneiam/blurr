@@ -6,6 +6,7 @@
   "license": "MIT",
   "repository": "theneiam/blurr",
   "devDependencies": {
+    "chai": "^2.1.2",
     "mocha": "^2.2.1",
     "supertest": "^0.15.0"
   },
@@ -27,5 +28,8 @@
     "router",
     "routing",
     "restful router"
-  ]
+  ],
+  "dependencies": {
+    "express": "^4.12.3"
+  }
 }
