@@ -1,5 +1,5 @@
 
-var assert  = require('assert'),
+var expect  = require('chai').expect,
     request = require('supertest'),
     blurr   = require('..'),
     app     = require('../examples/simple/app');
@@ -9,23 +9,24 @@ describe('blurr() test suits', function() {
     describe('Create Blurr instance', function() {
 
         it('should require config', function() {
-            assert.throws(blurr.bind(), /configuration required/);
+            expect(blurr.bind()).to.throw(TypeError, /configuration required/);
         });
 
         it('should require configuration as object', function() {
-            assert.throws(blurr.bind(blurr, 'string'), /configuration should be an object/);
+            expect(blurr.bind(blurr, 'string')).to.throw(TypeError, /configuration should be an object/);
         });
 
         it('should require config paths', function() {
-            assert.throws(blurr.bind(blurr, {}), /configuration paths required/);
+            expect(blurr.bind(blurr, {})).to.throw(TypeError, /onfiguration paths required/);
         });
 
         it('should require config paths controllers', function() {
-            assert.throws(blurr.bind(blurr, { paths: {} }), /configuration paths controllers required/);
+            expect(blurr.bind(blurr, { paths: {} })).to.throw(TypeError, /configuration paths controllers required/);
         });
 
         it('should require config resources', function() {
-            assert.throws(blurr.bind(blurr, { paths: {} }), /configuration paths controllers required/);
+            expect(blurr.bind(blurr, { paths: { controllers: '/path/to/controllers/' } }))
+                .to.throw(TypeError, /configuration resources required/);
         });
 
     });
