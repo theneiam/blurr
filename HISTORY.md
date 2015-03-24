@@ -1,4 +1,11 @@
+1.2.0 / 2015-03-24
+==================
+  * Code refactored after jsLink
+  * Added express as dependency
+  * Tests refactored
+
 1.1.1 / 2015-03-24
+==================
   * Fixed middleware loading bug
   * Added simple application example
   * Added GET tests  

@@ -1,7 +1,7 @@
 {
   "name": "blurr",
   "description": "Blurr - powerfull routing manager for Express",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "author": "Eugene Nezhuta <eugene.nezhuta@gmail.com>",
   "license": "MIT",
   "repository": "theneiam/blurr",
