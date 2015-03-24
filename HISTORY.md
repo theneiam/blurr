@@ -1,3 +1,8 @@
+1.1.0 / 2015-03-24
+==================
+  * Configuration option changed from 'middlewares' to 'moddleware'
+  * First draft of meaningful readme
+
 1.0.1 / 2015-03-23
 ==================
   * Bug fixing release
