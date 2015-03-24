@@ -61,7 +61,7 @@ exports = module.exports = function blurr(config) {
                 var controller = require(controllersPath + routeMeta['controller']);
 
                 // load route related middleware
-                var middleware = loadResourceRouteMiddleware(resource.routes[urlConfig]);
+                var middleware = loadResourceRouteMiddleware(config.paths.middleware, resource.routes[urlConfig]);
 
                 // register resource route
                 router[routeMeta['type']](routeMeta['url'], middleware, controller[routeMeta['action']]);
@@ -97,17 +97,18 @@ var parseResourceUrlConfig = function(urlConfig) {
 /**
  * Locate and require route-specific middleware, if needed
  *
+ * @param {String} middlewarePath
  * @param {Array} middlewareNames
  * @returns {Array} List of middleware ready to be injected into the route
  * @private
  */
-var loadResourceRouteMiddleware = function(middlewareNames) {
+var loadResourceRouteMiddleware = function(middlewarePath, middlewareNames) {
 
     if (!middlewareNames) {
         return [];
     }
 
     return middlewareNames.map(function(name) {
-        return require(config.paths.middleware + name);
+        return require(middlewarePath + name);
     });
 }
