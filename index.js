@@ -116,17 +116,22 @@ var parseResourceUrlConfig = function (urlConfig) {
  * Locate and require route-specific middleware, if needed
  *
  * @param {String} middlewarePath
- * @param {Array} middlewareNames
+ * @param {Array} middleware
  * @returns {Array} List of middleware ready to be injected into the route
  * @private
  */
-var loadResourceRouteMiddleware = function (middlewarePath, middlewareNames) {
+var loadResourceRouteMiddleware = function (middlewarePath, middleware) {
 
-    if (!middlewareNames) {
+    if (!middleware) {
         return [];
     }
 
-    return middlewareNames.map(function (name) {
-        return require(middlewarePath + name);
+    return middleware.map(function (middlewareItem) {
+
+        if (typeof middlewareItem === 'function') {
+            return middlewareItem;
+        }
+
+        return require(middlewarePath + middlewareItem);
     });
 };
