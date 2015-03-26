@@ -30,7 +30,11 @@ var config = {
                 'get / index@home': [],
                 'get /middleware index@middleware':[],
                 'get /middleware/:message index@middlewareMessage':['simple'],
-                'get /json index@jsonAction': []
+                'get /json index@jsonAction': [],
+                'get /inline index@inline': [
+                    function (req, res, next) { req.middlewareCount = 1; return next(); },
+                    function (req, res, next) { req.middlewareCount = 2; return next(); }
+                ]
             }
         }
     ]

@@ -1,6 +1,11 @@
+1.3.0 / 2015-03-26
+  * Allow to pass inline function as middleware along with middleware names
+  * Added more tests
+  * Example application code re-factored
+
 1.2.0 / 2015-03-24
 ==================
-  * Code refactored after jsLink
+  * Code refactored after jsLint
   * Added express as dependency
   * Tests refactored
 
