@@ -60,6 +60,14 @@ describe('blurr() test suits', function() {
                 .expect({message: 'Blurr is saying hi!'})
                 .expect(200, done);
         });
+
+        it('should load two inline middleware', function (done) {
+            request(app)
+                .get('/inline')
+                .expect('Content-Type', /json/)
+                .expect({middlewareCount: 2})
+                .expect(200, done);
+        });
     });
 
 });

@@ -6,26 +6,36 @@
  * MIT Licensed
  */
 
+'use strict';
+
 /**
  * Super simple controller (required for tests)
  */
-exports = module.exports = {
+module.exports = {
 
-    home: function(req, res) {
+    home: function (req, res) {
         res.sendStatus(200);
     },
 
-    middleware: function(req, res) {
+    middleware: function (req, res) {
         res.send('Index controller, middleware action');
     },
 
-    middlewareMessage: function(req, res) {
+    middlewareMessage: function (req, res) {
         res.status(200).send(req.blurrMessage);
     },
 
-    jsonAction: function(req, res) {
+    jsonAction: function (req, res) {
         res.json({
             message: 'Blurr is saying hi!'
         });
+    },
+
+    inline: function (req, res) {
+        res
+            .status(200)
+            .json({
+                middlewareCount : req.middlewareCount
+            });
     }
 };
