@@ -41,7 +41,6 @@ module.exports = function blurr(config) {
     }
 
     return function blurr(req, res, next) {
-
         // iterate through resources and register proper routes
         config.resources.forEach(function (resource) {
 
@@ -80,7 +79,12 @@ module.exports = function blurr(config) {
                     middleware = loadResourceRouteMiddleware(config.paths.middleware, resource.routes[urlConfig]);
 
                     // register resource route
-                    router[routeMeta.type](routeMeta.url, middleware, controller[routeMeta.action]);
+                    if (controller.hasOwnProperty(routeMeta.action)) {
+                        router[routeMeta.type](routeMeta.url, middleware, controller[routeMeta.action]);
+                    } else {
+                        router[routeMeta.type](routeMeta.url, middleware);
+                    }
+
 
                 }
             }
