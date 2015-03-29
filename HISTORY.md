@@ -1,4 +1,10 @@
+1.4.0 / 2015-03-30
+==================
+  * Added preferMountPathMatch option to load resource only if request path match resource's mount (true by default)
+  * Added ability to handle route just with a middleware without controller action (useful for cases where middleware only is important)
+
 1.3.0 / 2015-03-26
+==================
   * Allow to pass inline function as middleware along with middleware names
   * Added more tests
   * Example application code re-factored

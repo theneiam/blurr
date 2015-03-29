@@ -40,59 +40,83 @@ module.exports = function blurr(config) {
         throw new TypeError('configuration resources required');
     }
 
+    // load resource only if route path match resource mount path
+    config.preferMountPathMatch = config.preferMountPathMatch || true;
+
     return function blurr(req, res, next) {
 
         // iterate through resources and register proper routes
         config.resources.forEach(function (resource) {
 
-            // each resource use its own instance of the express router
-            var router = express.Router(),
-
-                // try to get resource module name, if modular structure is used
-                module = resource.module || '',
-
-                // path to controllers considering module
-                controllersPath = config.paths.controllers.replace('*', module),
-
-                // current route url with configuration
-                urlConfig,
-
-                // route meta information after parsing route config url
-                routeMeta,
-
-                // controller to handle the specific route
-                controller,
-
-                // list of middleware that required for current route
-                middleware;
-
-            for (urlConfig in resource.routes) {
-
-                if (resource.routes.hasOwnProperty(urlConfig)) {
-
-                    // parse resource route url and get all route meta information
-                    routeMeta = parseResourceUrlConfig(urlConfig);
-
-                    // require controller to handle the reques
-                    controller = require(controllersPath + routeMeta.controller);
-
-                    // load route related middleware
-                    middleware = loadResourceRouteMiddleware(config.paths.middleware, resource.routes[urlConfig]);
-
-                    // register resource route
-                    router[routeMeta.type](routeMeta.url, middleware, controller[routeMeta.action]);
-
+            if (config.preferMountPathMatch) {
+                if (req.path === resource.mount) {
+                    loadResource(config, req, resource);
                 }
+
+            } else {
+                loadResource(config, req, resource);
             }
 
-            // mount router to the application into the mount point specified by resource
-            req.app.use(resource.mount, router);
-
         });
-
         return next();
     };
 };
+
+/**
+ * Load specific resource
+ *
+ * @param {Object} config
+ * @param {http.Request} req
+ * @param {Object} resource
+ */
+var loadResource = function (config, req, resource) {
+
+    // each resource use its own instance of the express router
+    var router = express.Router(),
+
+    // try to get resource module name, if modular structure is used
+        module = resource.module || '',
+
+    // path to controllers considering module
+        controllersPath = config.paths.controllers.replace('*', module),
+
+    // current route url with configuration
+        urlConfig,
+
+    // route meta information after parsing route config url
+        routeMeta,
+
+    // controller to handle the specific route
+        controller,
+
+    // list of middleware that required for current route
+        middleware;
+
+    for (urlConfig in resource.routes) {
+
+        if (resource.routes.hasOwnProperty(urlConfig)) {
+
+            // parse resource route url and get all route meta information
+            routeMeta = parseResourceUrlConfig(urlConfig);
+
+            // require controller to handle the reques
+            controller = require(controllersPath + routeMeta.controller);
+
+            // load route related middleware
+            middleware = loadResourceRouteMiddleware(config.paths.middleware, resource.routes[urlConfig]);
+
+            // register resource route
+            if (controller.hasOwnProperty(routeMeta.action)) {
+                router[routeMeta.type](routeMeta.url, middleware, controller[routeMeta.action]);
+            } else {
+                router[routeMeta.type](routeMeta.url, middleware);
+            }
+        }
+    }
+
+    // mount router to the application into the mount point specified by resource
+    req.app.use(resource.mount, router);
+}
 
 /**
  * Parse resource 'url config' and prepare an object with request type, route url cntroller and action

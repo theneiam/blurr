@@ -62,6 +62,8 @@ var config = {
         middleware: '/path/to/middleware/directory/'
     },
 
+    preferMountPathMatch: true,
+
     resources: [
         {
             mount: '/',
@@ -105,6 +107,12 @@ and **blurr** will automatically resolve it to correct path using resource *modu
 ```
 
 In the example above, the final path to controller will be */path/to/modular/messaging/controllers/directory/*
+
+##### Config preferMountPathMatch
+
+ *preferMountPathMatch* option allows Blurr to load resource only if its mount point match request path.
+ This option is set to *true* by default.
+ This behaviour is useful for application with a lot of resources it will speed up loading and help to avoid of scanning of resources on each request
 
 ##### Config resources
 
