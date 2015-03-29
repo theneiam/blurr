@@ -49,10 +49,8 @@ module.exports = function blurr(config) {
         config.resources.forEach(function (resource) {
 
             if (config.preferMountPathMatch) {
-
                 if (req.path === resource.mount) {
                     loadResource(config, req, resource);
-                    return next();
                 }
 
             } else {
@@ -60,7 +58,6 @@ module.exports = function blurr(config) {
             }
 
         });
-
         return next();
     };
 };
