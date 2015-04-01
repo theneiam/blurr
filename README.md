@@ -1,6 +1,6 @@
 Blurr
 =====
-[![Travis](https://travis-ci.org/theneiam/blurr.svg?branch=master)](https://travis-ci.org/theneiam/blurr.svg?branch=master)
+[![Travis](https://travis-ci.org/theneiam/blurr.svg?branch=master)](https://travis-ci.org/theneiam/blurr)
 [![Code Climate](https://codeclimate.com/github/theneiam/blurr/badges/gpa.svg)](https://codeclimate.com/github/theneiam/blurr)
 
 Blurr - powerful routing manager middleware for [Express](https://github.com/strongloop/express)
