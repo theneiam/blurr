@@ -4,7 +4,9 @@ Blurr
 [![Code Climate](https://codeclimate.com/github/theneiam/blurr/badges/gpa.svg)](https://codeclimate.com/github/theneiam/blurr)
 
 **Blurr** - powerful routing manager middleware for [Express](https://github.com/strongloop/express)
+
 **Blurr** supports modular application architecture, express router options, REST architecture and can be integrated to the project in a minute.
+
 **Blurr** can be used as a main route manager or it can work along with another routing software (e.g. express native router)
 
 
@@ -22,7 +24,9 @@ To install *Blurr* temporarily, and not add it to the dependencies list, omit th
 $ npm install blurr
 ```
 
-## Usage (Super Quick Start) *we assume that you already installed express and blurr*
+## Usage (Super Quick Start) 
+
+*we assume that you already installed express and blurr*
 
 Create the following directory structure
 
@@ -224,7 +228,7 @@ resource related routes
 ```
 
 
-#### Blurr configuration: Resource routes
+##### Blurr configuration: Resource routes
 
 Each resource route has 2 parts:
     * route config url
