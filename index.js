@@ -41,7 +41,12 @@ module.exports = function blurr(config) {
     }
 
     // load resource only if route path match resource mount path
-    config.preferMountPathMatch = config.preferMountPathMatch || true;
+    config.preferMountPathMatch = config.preferMountPathMatch || false;
+
+    // expose express router options
+    config.caseSensitive = config.caseSensitive || false;
+    config.mergeParams = config.mergeParams || false;
+    config.strict = config.strict || false;
 
     return function blurr(req, res, next) {
 
@@ -72,7 +77,11 @@ module.exports = function blurr(config) {
 var loadResource = function (config, req, resource) {
 
     // each resource use its own instance of the express router
-    var router = express.Router(),
+    var router = express.Router({
+            caseSensitive: config.caseSensitive,
+            mergeParams: config.mergeParams,
+            strict: config.strict
+        }),
 
     // try to get resource module name, if modular structure is used
         module = resource.module || '',
