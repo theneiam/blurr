@@ -227,7 +227,6 @@ resource related routes
 }
 ```
 
-
 ##### Blurr configuration: Resource routes
 
 Each resource route has 2 parts:
@@ -236,10 +235,13 @@ Each resource route has 2 parts:
 
 Route config url has following structure '{routeType} {routeUrl} {controller}@{action}'
 
-{routeType} - get, post, put, delete
-{routeUrl} - resource route url
-{controller} - name of the controller file
-{action} - action function that will handle a route
+**{routeType}** - get, post, put, delete, all
+
+**{routeUrl}** - resource route url
+
+**{controller}** - name of the controller file
+
+**{action}** - action function that will handle a route
 
 Array with middleware names - list of middleware that will be required for the specific route
 
@@ -251,24 +253,21 @@ routes: {
 
 ##### Blurr configuration: preferMountPathMatch
 
- **preferMountPathMatch** option allows **Blurr** to load resource only if its mount point match request path.
+ This option allows **Blurr** to load resource only if its mount point match request path.
  This option is set to **false** by default.
  This behaviour is useful for application with a lot of resources, it will speed up loading and help to avoid of scanning of resources on each request
 
 
 ##### Blurr configuration: caseSensitive
-    See [Express router](http://expressjs.com/4x/api.html#router) caseSensitive
+See [Express router](http://expressjs.com/4x/api.html#router): *caseSensitive* option
     
 
 ##### Blurr configuration: mergeParams
-    See [Express router](http://expressjs.com/4x/api.html#router) mergeParams
+See [Express router](http://expressjs.com/4x/api.html#router): *mergeParams* option
     
     
 ##### Blurr configuration: strict
-    See [Express router](http://expressjs.com/4x/api.html#router) strict
-
-
-Also resource can contain *module* option if your application has modular structure (see example bellow)
+See [Express router](http://expressjs.com/4x/api.html#router): *strict* option
 
 
 ##### Bonus: Simple controller example
