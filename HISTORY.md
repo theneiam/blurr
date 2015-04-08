@@ -1,3 +1,8 @@
+1.5.0 / 2015-04-07
+=================
+  * preferMountPathMatch changed to be false by default
+  * blurr config now supports all express router options, such as: strict, mergeParams and caseSensitive
+
 1.4.0 / 2015-03-30
 ==================
   * Added preferMountPathMatch option to load resource only if request path match resource's mount (true by default)
