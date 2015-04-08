@@ -3,12 +3,103 @@ Blurr
 [![Travis](https://travis-ci.org/theneiam/blurr.svg?branch=master)](https://travis-ci.org/theneiam/blurr)
 [![Code Climate](https://codeclimate.com/github/theneiam/blurr/badges/gpa.svg)](https://codeclimate.com/github/theneiam/blurr)
 
-Blurr - powerful routing manager middleware for [Express](https://github.com/strongloop/express)
+**Blurr** - powerful routing manager middleware for [Express](https://github.com/strongloop/express)
+**Blurr** supports modular application architecture, express router options, REST architecture and can be integrated to the project in a minute.
+**Blurr** can be used as a main route manager or it can work along with another routing software (e.g. express native router)
 
-## Install
+
+## Installation
+
+Install *Blurr* save it in the dependencies list:
+
+```sh
+$ npm install blurr --save
+```
+
+To install *Blurr* temporarily, and not add it to the dependencies list, omit the --save option:
 
 ```sh
 $ npm install blurr
+```
+
+## Usage (Super Quick Start) *we assume that you already installed express and blurr*
+
+Create the following directory structure
+
+```sh
+.
++-- app/
+|   +-- controllers/
+|   |   +-- index.js
++-- app.js   
++-- package.json
+
+```
+Edit app.js file
+
+```js
+
+// require minimum dependencies
+var http = require('http'),
+    express = require('express'),
+    blurr   = require('blurr');
+
+// create an application instance
+var app = express();
+
+// create minimal **Blurr** config 
+var blurrConfig = {
+    paths: {
+        controllers: __dirname + '/app/controllers/'
+    },
+    resources: [
+        {
+            mount: '/',
+            routes: {
+                'get / index@index': []
+            }
+        }
+    ]
+};
+
+// tell application to use **Blurr**
+app.use(blurr(blurrConfig));
+
+// start listening
+http
+    .createServer(app)
+    .listen(5000, function() {
+        console.log('Listening on port 5000');
+    });
+
+```
+
+Edit app/controllers/index.js
+
+```js
+'use strict';
+
+var IndexController = function() {
+
+    return {
+        index: function(req, res) {
+            res.json({ message: 'Knock knock, Neo.' });
+        }
+    };
+}
+
+module.exports = new IndexController();
+
+```
+
+Run your application and curl (or visit) the http://localhost:5000/
+
+```sh
+node app.js
+```
+
+```sh
+curl http://localhost:5000
 ```
 
 ## API
@@ -17,66 +108,74 @@ $ npm install blurr
 var blurr = require('blurr');
 ```
 
-### blurr(config)
 
-Create a new blurr router middleware instance
+#### Connect Blurr with Express
 
-#### Useage
+Create a new **Blurr** instance and make express use it 
 
 ```js
 var express    = require('express'),
     blurr      = require('blurr');
 
-    // blur router configuration
-    var config = {
-        paths: {
-            controllers: '/path/to/controllers/directory/',
-            middleware: '/path/to/middleware/directory/'
-        },
-        resources: [
-            {
-                mount: '/',
-                routes: {
-                    'get / index@home': []
-                }
-            }
-        ]
-    }
-
     var app = express();
-    app.use(blurr(config));
-
+    app.use(blurr({ ... }));
 ```
 
-#### Config
 
-Basic blurr config object expects to have:
-  * *paths* object with path to *controllers* (required) and *middleware* (optional) directories.
-  * *resources* array with at lease one resource configured
+#### Blurr configuration
+
+First of all, let's see a **minimal** config example
 
 ```js
-var config = {
-
+var blurrConfig = {
+    
     paths: {
-        controllers: '/path/to/controllers/directory/',
-        middleware: '/path/to/middleware/directory/'
+        controllers: '/path/to/controllers/directory/'
     },
-
-    preferMountPathMatch: true,
-
+    
     resources: [
         {
             mount: '/',
             routes: {
-                'get / index@index': [],
-                'get /hello/:name index@sayHello': []
+                'get / index@index': []
             }
         }
     ]
-}
+    
+};
 ```
 
-##### Config paths
+And here is a **full** config example
+
+```js
+var blurrConfiguration = {
+    
+    paths: {
+        controllers: '/path/to/*/controllers/directory/',
+        middleware: '/path/to/middleware/directory/'
+    },
+    
+    resources: [
+        {
+            module : 'main'
+            mount  : '/',
+            routes : {
+                'get / index@home': []
+            }
+        }
+    ],
+        
+    strict               : false,
+    caseSensitive        : false,
+    mergeParams          : false,
+    preferMountPathMatch : false
+    
+}
+    
+```
+
+
+##### Blurr configuration: paths
 
 Paths object should contain *controllers* property with path to controllers directory. Optionally it may contain *middleware*
 property with path to the directory with middleware, **blurr** will try to load middleware (if specified) for your resource routes from that directory
@@ -108,13 +207,8 @@ and **blurr** will automatically resolve it to correct path using resource *modu
 
 In the example above, the final path to controller will be */path/to/modular/messaging/controllers/directory/*
 
-##### Config preferMountPathMatch
 
- *preferMountPathMatch* option allows Blurr to load resource only if its mount point match request path.
- This option is set to *true* by default.
- This behaviour is useful for application with a lot of resources it will speed up loading and help to avoid of scanning of resources on each request
-
-##### Config resources
+#####  Blurr configuration: resources
 
 Resource is an object that should include *mount* point to mount a resource to the express and *routes* abject, that contains
 resource related routes
@@ -129,9 +223,8 @@ resource related routes
 }
 ```
 
-Also resource can contain *module* option if your application has modular structure (see example bellow)
 
-#### Resource routes
+#### Blurr configuration: Resource routes
 
 Each resource route has 2 parts:
     * route config url
@@ -152,7 +245,29 @@ routes: {
 }
 ```
 
-#### Simple controller example
+##### Blurr configuration: preferMountPathMatch
+
+ **preferMountPathMatch** option allows **Blurr** to load resource only if its mount point match request path.
+ This option is set to **false** by default.
+ This behaviour is useful for application with a lot of resources, it will speed up loading and help to avoid of scanning of resources on each request
+
+
+##### Blurr configuration: caseSensitive
+    See [Express router](http://expressjs.com/4x/api.html#router) caseSensitive
+    
+
+##### Blurr configuration: mergeParams
+    See [Express router](http://expressjs.com/4x/api.html#router) mergeParams
+    
+    
+##### Blurr configuration: strict
+    See [Express router](http://expressjs.com/4x/api.html#router) strict
+
+
+Also resource can contain *module* option if your application has modular structure (see example bellow)
+
+
+##### Bonus: Simple controller example
 
 Just a simple controller example, but you can use all your imagination :)
 
