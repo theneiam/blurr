@@ -1,5 +1,7 @@
 Blurr
 =====
+
+[![Join the chat at https://gitter.im/theneiam/blurr](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/theneiam/blurr?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Travis](https://travis-ci.org/theneiam/blurr.svg?branch=master)](https://travis-ci.org/theneiam/blurr)
 [![Code Climate](https://codeclimate.com/github/theneiam/blurr/badges/gpa.svg)](https://codeclimate.com/github/theneiam/blurr)
 
