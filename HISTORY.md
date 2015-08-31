@@ -1,3 +1,7 @@
+1.6.1 / 2015-08-31
+==================
+  * patch release - fix es6 classes compatibility
+
 1.6.0 / 2015-08-31
 ==================
   * Replace 'hasOwnProperty' check to 'in' to allow handle controllers written in es6 class style
