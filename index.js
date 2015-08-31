@@ -19,26 +19,8 @@ var express = require('express');
  * @return {Function}
  */
 module.exports = function blurr(config) {
-
-    if (!config) {
-        throw new TypeError('configuration required');
-    }
-
-    if (typeof config !== 'object') {
-        throw new TypeError('configuration should be an object');
-    }
-
-    if (!config.paths) {
-        throw new TypeError('configuration paths required');
-    }
-
-    if (!config.paths.controllers) {
-        throw new TypeError('configuration paths controllers required');
-    }
-
-    if (!config.resources) {
-        throw new TypeError('configuration resources required');
-    }
+    // validate config for required fields
+    validateConfig(config);
 
     // load resource only if route path match resource mount path
     config.preferMountPathMatch = config.preferMountPathMatch || false;
@@ -65,6 +47,28 @@ module.exports = function blurr(config) {
         });
         return next();
     };
+};
+
+var validateConfig = function (config) {
+    if (!config) {
+        throw new TypeError('configuration required');
+    }
+
+    if (typeof config !== 'object') {
+        throw new TypeError('configuration should be an object');
+    }
+
+    if (!config.paths) {
+        throw new TypeError('configuration paths required');
+    }
+
+    if (!config.paths.controllers) {
+        throw new TypeError('configuration paths controllers required');
+    }
+
+    if (!config.resources) {
+        throw new TypeError('configuration resources required');
+    }
 };
 
 /**
@@ -115,7 +119,7 @@ var loadResource = function (config, req, resource) {
             middleware = loadResourceRouteMiddleware(config.paths.middleware, resource.routes[urlConfig]);
 
             // register resource route
-            if (controller.hasOwnProperty(routeMeta.action)) {
+            if (routeMeta.action in controller) {
                 router[routeMeta.type](routeMeta.url, middleware, controller[routeMeta.action]);
             } else {
                 router[routeMeta.type](routeMeta.url, middleware);
@@ -125,7 +129,7 @@ var loadResource = function (config, req, resource) {
 
     // mount router to the application into the mount point specified by resource
     req.app.use(resource.mount, router);
-}
+};
 
 /**
  * Parse resource 'url config' and prepare an object with request type, route url cntroller and action
@@ -138,10 +142,10 @@ var parseResourceUrlConfig = function (urlConfig) {
     var splitUrlConfig = urlConfig.split(' ');
 
     return {
-        'type'       : splitUrlConfig[0],
-        'url'        : splitUrlConfig[1],
-        'controller' : splitUrlConfig[2].split('@')[0],
-        'action'     : splitUrlConfig[2].split('@')[1]
+        'type': splitUrlConfig[0],
+        'url': splitUrlConfig[1],
+        'controller': splitUrlConfig[2].split('@')[0],
+        'action': splitUrlConfig[2].split('@')[1]
     };
 };
 
