@@ -115,6 +115,10 @@ var loadResource = function (config, req, resource) {
             // require controller to handle the reques
             controller = require(controllersPath + routeMeta.controller);
 
+            if (typeof controller === 'function') {
+                controller = new controller();
+            }
+
             // load route related middleware
             middleware = loadResourceRouteMiddleware(config.paths.middleware, resource.routes[urlConfig]);
 
