@@ -1,5 +1,10 @@
+1.5.1 / 2015-07-21
+==================
+  * patch release - updated and improved readme
+  * new badges added
+
 1.5.0 / 2015-04-07
-=================
+==================
   * preferMountPathMatch changed to be false by default
   * blurr config now supports all express router options, such as: strict, mergeParams and caseSensitive
 
