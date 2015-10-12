@@ -5,6 +5,7 @@ Blurr
 [![Travis](https://travis-ci.org/theneiam/blurr.svg?branch=master)](https://travis-ci.org/theneiam/blurr)
 [![Code Climate](https://codeclimate.com/github/theneiam/blurr/badges/gpa.svg)](https://codeclimate.com/github/theneiam/blurr)
 [![npm downloads](https://img.shields.io/npm/dm/blurr.svg)](https://www.npmjs.com/package/blurr)
+[![NPM](https://nodei.co/npm/blurr.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/blurr)
 
 **Blurr** - powerful routing manager middleware for [Express](https://github.com/strongloop/express)
 
